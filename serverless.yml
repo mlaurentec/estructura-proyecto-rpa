@@ -1,0 +1,25 @@
+app: rpa-x
+service: demo-01
+
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: python3.7
+
+functions:
+  hello:
+    handler: handler.handler
+    # events:
+    #   - httpApi:
+    #       path: /
+    #       method: get
+
+plugins:
+  - serverless-python-requirements
+  - serverless-offline
+  - serverless-dotenv-plugin
+
+custom:
+  pythonRequirements:
+    usePipenv: false
