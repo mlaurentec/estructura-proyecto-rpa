@@ -52,32 +52,5 @@ __Activar entorno virtual__
 ```sh
 $ pipenv shell
 ```
-__Instalar dependencias de serverless__
-
-```sh
-npm install serverless-offline --save-dev &&
-sls plugin install -n serverless-python-requirements &&
-npm i -D serverless-dotenv-plugin
-
-
-sls offline
-```
-##__Ejecutar lambda en local__
-
-Ejecutar lambda con evento vacio
-```sh
-sls invoke local --function hello
-```
-Ejecutar lambda con evento con evento especifico
-```sh
-sls invoke local --function hello --path event/event.json
-```
-Simular ejecucion de eventbridge
-
-```sh
-sls offline
-```
-
-## 🧪 **Tests**
 
 ## 📧 __Contacto__
