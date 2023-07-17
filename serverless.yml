@@ -10,10 +10,16 @@ provider:
 functions:
   hello:
     handler: handler.handler
-    # events:
-    #   - httpApi:
-    #       path: /
-    #       method: get
+    #  events:
+    #    - httpApi:
+    #        path: /
+    #        method: get
+      #  - schedule:
+      #      rate: cron(38 12 * * ? *)
+      #      timezone: 'America/lima'
+      #      input:.
+      #        provider: ejemplo-aws
+      #        is_delta: true
 
 plugins:
   - serverless-python-requirements
