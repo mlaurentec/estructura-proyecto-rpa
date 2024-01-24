@@ -1,0 +1,41 @@
+image: python:3.9 # Choose an image matching your project needs
+
+definitions:
+  services:
+    docker:
+      memory: 2048
+  caches:
+    sonar: ~/.sonar/cache  # Caching SonarCloud artifacts will speed up your build
+  steps:
+    - step: &security-scan
+        name: Security Scan
+        script:
+          # Run a security scan for sensitive data.
+          # See more security tools at https://bitbucket.org/product/features/pipelines/integrations?&category=security
+          - pipe: atlassian/git-secrets-scan:0.4.3
+    - step: &build-test-sonarcloud
+        name: Build, test and analyze on SonarCloud
+        services:
+          - docker
+        caches:
+          - pip           # See https://confluence.atlassian.com/bitbucket/caching-dependencies-895552876.html
+          - sonar
+        script:
+          - if [ -f requirements.txt ]; then pip install -r requirements.txt -v; fi           # Build your project and run
+          - pipe: sonarsource/sonarcloud-scan:1.2.1
+    - step: &check-quality-gate-sonarcloud
+        name: Check the Quality Gate on SonarCloud
+        script:
+          - pipe: sonarsource/sonarcloud-quality-gate:0.1.4
+
+pipelines:                 # More info here: https://confluence.atlassian.com/bitbucket/configure-bitbucket-pipelines-yml-792298910.html
+  branches:
+    '**':
+      - step: *security-scan
+      - step: *build-test-sonarcloud
+      - step: *check-quality-gate-sonarcloud
+  pull-requests:
+    '**':
+      - step: *security-scan
+      - step: *build-test-sonarcloud
+      - step: *check-quality-gate-sonarcloud
