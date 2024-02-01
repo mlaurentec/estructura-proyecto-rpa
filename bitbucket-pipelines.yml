@@ -12,7 +12,7 @@ definitions:
         script:
           # Run a security scan for sensitive data.
           # See more security tools at https://bitbucket.org/product/features/pipelines/integrations?&category=security
-          - pipe: atlassian/git-secrets-scan:0.4.3
+          - pipe: atlassian/git-secrets-scan:1.5.0
     - step: &build-test-sonarcloud
         name: Build, test and analyze on SonarCloud
         services:
@@ -22,11 +22,11 @@ definitions:
           - sonar
         script:
           - if [ -f requirements.txt ]; then pip install -r requirements.txt -v; fi           # Build your project and run
-          - pipe: sonarsource/sonarcloud-scan:1.2.1
+          - pipe: sonarsource/sonarcloud-scan:2.0.0
     - step: &check-quality-gate-sonarcloud
         name: Check the Quality Gate on SonarCloud
         script:
-          - pipe: sonarsource/sonarcloud-quality-gate:0.1.4
+          - pipe: sonarsource/sonarcloud-quality-gate:0.1.6
 
 pipelines:                 # More info here: https://confluence.atlassian.com/bitbucket/configure-bitbucket-pipelines-yml-792298910.html
   branches:
