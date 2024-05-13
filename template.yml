@@ -30,6 +30,11 @@ Resources:
           Properties:
             Path: /hello
             Method: get
+    ExampleLogGroup:
+      Type: AWS::Logs::LogGroup
+      Properties:
+        LogGroupName: !Sub '/aws/lambda/${codigoFuente}'
+        RetentionInDays: 30
 
 Outputs:
   # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
